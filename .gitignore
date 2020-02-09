@@ -1,0 +1,10 @@
+target/
+.idea/
+
+$~
+.ensime
+.ensime_cache/
+.bloop/
+.metals/
+project/.bloop/
+.scannerwork/
