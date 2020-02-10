@@ -9,7 +9,7 @@ import scala.util._
 trait Applicative[F[_]] extends Functor[F] {
   def ap[A, B](ff: F[A => B])(fa: F[A]): F[B]
   def pure[A](a: A): F[A]
-  def map[A, B](fa: F[A])(f: A => B): F[B]
+  def map[A, B](fa: F[A])(f: A => B): F[B] = ap(pure(f))(fa)
 }
 
 trait ApplicativeWithProduct[F[_]] extends Functor[F] {
@@ -19,8 +19,8 @@ trait ApplicativeWithProduct[F[_]] extends Functor[F] {
 
 class ApplicativeSpec extends AnyWordSpec {
 
-  "ApplicativeWithProduct" should {
-    "demos" in {
+  "Applicative" should {
+    "WithProduct" in {
 
       implicit def applicativeForEither[L]: ApplicativeWithProduct[Either[L, *]] =
         new ApplicativeWithProduct[Either[L, *]] {
@@ -40,6 +40,32 @@ class ApplicativeSpec extends AnyWordSpec {
         }
 
       applicativeForEither[Either[String, String]]
+    }
+    "Witb ap" in {
+
+      implicit def applicationForEither[L]: Applicative[Either[L, *]] =
+        new Applicative[Either[L, *]] {
+          def pure[A](a: A): Either[L, A] = Right(a)
+          def ap[A, B](eab: Either[L, A => B])(ea: Either[L, A]): Either[L, B] = eab match {
+            case Left(value)  => Left(value)
+            case Right(value) => ea.map(value)
+          }
+        }
+
+      applicationForEither[Either[String, String]]
+
+    }
+  }
+  "Cats Applicative" should {
+    "compose" in {
+      import cats.implicits._
+      import cats.Applicative
+
+      val x = List(Some(1), None, Some(3))
+      val y = List(Some(10))
+
+      val res = Applicative[List].compose[Option].map2(x, y)(_ + _)
+      println(res)
     }
   }
 
