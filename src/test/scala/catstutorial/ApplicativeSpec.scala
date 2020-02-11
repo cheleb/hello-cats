@@ -65,7 +65,12 @@ class ApplicativeSpec extends AnyWordSpec {
       val y = List(Some(10))
 
       val res = Applicative[List].compose[Option].map2(x, y)(_ + _)
+
       println(res)
+
+      val res2 = List(Some(1),Some(2),None).sequence
+
+      val res3 = List("a", "b").traverse(str=>Option(str))
     }
   }
 
