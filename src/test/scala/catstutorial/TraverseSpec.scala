@@ -43,11 +43,11 @@ class TraverseSpec extends AnyWordSpec {
   "Traverse" should {
     "apply to tree" in {
 
-       import tree._
-       import cats.implicits._
+      import tree._
+      import cats.implicits._
 
-       val v = Tree.Branch(1, Tree.Empty(), Tree.Empty()).traverse(i=>List(i))
-       println(v)
+      val v = Tree.Branch(1, Tree.Empty(), Tree.Empty()).traverse(i => List(i))
+      println(v)
 
     }
   }
