@@ -7,8 +7,8 @@ import scala.util.Try
 
 object Simple extends IOApp {
 
-  def a() = IO.sleep(1 second) *> IO.fromTry(Try("aa".substring(1)))
-  def b() = IO.fromTry(Try("ab".substring(1)))
+  def a()             = IO.sleep(1 second) *> IO.fromTry(Try("aa".substring(1)))
+  def b()             = IO.fromTry(Try("ab".substring(1)))
   def c(): IO[String] = IO.raiseError(new RuntimeException("c"))
 
   val prg1 = List(a(), b(), c()).parSequence

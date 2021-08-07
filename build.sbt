@@ -1,7 +1,7 @@
 name := "hello-cats"
 version := "0.0.1-SNAPSHOT"
 
-scalaVersion := "2.13.3"
+scalaVersion := "2.13.6"
 
 scalacOptions ++= Seq(
   "-encoding", "UTF-8",   // source files are in UTF-8
@@ -15,10 +15,10 @@ scalacOptions ++= Seq(
 
 )
 
-libraryDependencies += "org.typelevel" %% "cats-core" % "2.2.0"
-libraryDependencies += "org.typelevel" %% "cats-effect" % "2.1.4"
+libraryDependencies += "org.typelevel" %% "cats-core" % "2.6.1"
+libraryDependencies += "org.typelevel" %% "cats-effect" % "3.2.2"
 
-val circeVersion = "0.13.0"
+val circeVersion = "0.14.1"
 
 libraryDependencies ++= Seq(
   "io.circe" %% "circe-core",
@@ -26,7 +26,7 @@ libraryDependencies ++= Seq(
   "io.circe" %% "circe-parser"
 ).map(_ % circeVersion)
 
-libraryDependencies += "org.scalatest" %% "scalatest" % "3.2.2" % Test
-addCompilerPlugin("org.typelevel" % "kind-projector_2.13.1" % "0.11.0")
+libraryDependencies += "org.scalatest" %% "scalatest" % "3.2.9" % Test
+addCompilerPlugin("org.typelevel" % "kind-projector_2.13.6" % "0.13.0")
 
 scalafmtOnCompile := true

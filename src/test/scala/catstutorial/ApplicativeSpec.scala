@@ -68,9 +68,6 @@ class ApplicativeSpec extends AnyWordSpec {
 
       println(res)
 
-      val res2 = List(Some(1),Some(2),None).sequence
-
-      val res3 = List("a", "b").traverse(str=>Option(str))
     }
   }
 
