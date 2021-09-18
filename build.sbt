@@ -16,7 +16,7 @@ scalacOptions ++= Seq(
 )
 
 libraryDependencies += "org.typelevel" %% "cats-core" % "2.6.1"
-libraryDependencies += "org.typelevel" %% "cats-effect" % "3.2.2"
+libraryDependencies += "org.typelevel" %% "cats-effect" % "3.2.9"
 
 val circeVersion = "0.14.1"
 
@@ -26,7 +26,7 @@ libraryDependencies ++= Seq(
   "io.circe" %% "circe-parser"
 ).map(_ % circeVersion)
 
-libraryDependencies += "org.scalatest" %% "scalatest" % "3.2.9" % Test
-addCompilerPlugin("org.typelevel" % "kind-projector_2.13.6" % "0.13.0")
+libraryDependencies += "org.scalatest" %% "scalatest" % "3.2.10" % Test
+addCompilerPlugin("org.typelevel" % "kind-projector_2.13.6" % "0.13.2")
 
 scalafmtOnCompile := true
