@@ -19,12 +19,29 @@ libraryDependencies += "org.typelevel" %% "cats-effect" % "3.3.14"
 libraryDependencies += "org.typelevel" %% "cats-effect" % "3.3.14"
 
 val circeVersion = "0.14.1"
+val tapirVersion = "1.9.10"
+val http4sVersion = "0.23.26"
 
 libraryDependencies ++= Seq(
   "io.circe" %% "circe-core",
   "io.circe" %% "circe-generic",
   "io.circe" %% "circe-parser"
 ).map(_ % circeVersion)
+
+// Tapir dependencies
+libraryDependencies ++= Seq(
+  "com.softwaremill.sttp.tapir" %% "tapir-core" % tapirVersion,
+  "com.softwaremill.sttp.tapir" %% "tapir-http4s-server" % tapirVersion,
+  "com.softwaremill.sttp.tapir" %% "tapir-json-circe" % tapirVersion,
+  "com.softwaremill.sttp.tapir" %% "tapir-swagger-ui-bundle" % tapirVersion
+)
+
+// Http4s dependencies
+libraryDependencies ++= Seq(
+  "org.http4s" %% "http4s-dsl" % http4sVersion,
+  "org.http4s" %% "http4s-ember-server" % http4sVersion,
+  "org.http4s" %% "http4s-ember-client" % http4sVersion
+)
 
 libraryDependencies += "org.scalatest" %% "scalatest" % "3.2.14" % Test
 addCompilerPlugin("org.typelevel" % "kind-projector_2.13.6" % "0.13.2")
