@@ -22,8 +22,7 @@ object Basic extends IOApp {
 
 object ShortCircuit extends IOApp {
 
-  def io(n: Int): IO[Int] =
-    IO.pure(n) <* IO(println(s"n is $n"))
+  def io(n: Int): IO[Int] = IO.pure(n) <* IO(println(s"n is $n"))
 
   def run(args: List[String]): IO[ExitCode] =
     for {

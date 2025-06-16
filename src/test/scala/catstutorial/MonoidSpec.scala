@@ -16,7 +16,7 @@ class MonoidSpec extends AnyWordSpec {
 
   "Int sample" should {
     import cats.instances.option._
-    //import cats.instances.int._
+    // import cats.instances.int._
     import cats.syntax.semigroup._
     "Illustrate basics" in {
 

@@ -15,8 +15,7 @@ trait JsonWriter[-A] {
 }
 
 object Json {
-  def toJson[A](value: A)(implicit writer: JsonWriter[A]): Json =
-    writer.write(value)
+  def toJson[A](value: A)(implicit writer: JsonWriter[A]): Json = writer.write(value)
 }
 
 object JsonSyntax {

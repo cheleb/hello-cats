@@ -14,12 +14,11 @@ object BracketSample extends IOApp {
           println("#Write")
           writer.append("Hello")
         }
-      } {
-        case w =>
-          IO {
-            println("#Closing")
-            w.close
-          }
+      } { case w =>
+        IO {
+          println("#Closing")
+          w.close
+        }
       }
     } { f =>
       IO {

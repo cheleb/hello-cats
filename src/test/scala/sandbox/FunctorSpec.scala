@@ -15,19 +15,16 @@ final case class Branch[A](left: Tree[A], right: Tree[A]) extends Tree[A]
 final case class Leaf[A](value: A) extends Tree[A]
 
 object Tree {
-  def branch[A](left: Tree[A], right: Tree[A]): Tree[A] =
-    Branch(left, right)
+  def branch[A](left: Tree[A], right: Tree[A]): Tree[A] = Branch(left, right)
 
-  def leaf[A](value: A): Tree[A] =
-    Leaf(value)
+  def leaf[A](value: A): Tree[A] = Leaf(value)
 }
 
 trait Printable[A] {
   self =>
   def format(value: A): String
 
-  def contramap[B](func: B => A): Printable[B] =
-    (value: B) => self.format(func(value))
+  def contramap[B](func: B => A): Printable[B] = (value: B) => self.format(func(value))
 }
 
 trait Codec[A] {
@@ -36,12 +33,13 @@ trait Codec[A] {
 
   def encode(value: A): String
   def decode(value: String): A
-  def imap[B](dec: A => B, enc: B => A): Codec[B] = new Codec[B] {
+  def imap[B](dec: A => B, enc: B => A): Codec[B] =
+    new Codec[B] {
 
-    override def encode(value: B): String = self.encode(enc(value))
+      override def encode(value: B): String = self.encode(enc(value))
 
-    override def decode(value: String): B = dec(self.decode(value))
-  }
+      override def decode(value: String): B = dec(self.decode(value))
+    }
 }
 
 class FunctorSpec extends AnyWordSpec {
@@ -83,19 +81,16 @@ class FunctorSpec extends AnyWordSpec {
 
     "contramap" in {
 
-      def format[A](value: A)(implicit p: Printable[A]): String =
-        p.format(value)
+      def format[A](value: A)(implicit p: Printable[A]): String = p.format(value)
 
       implicit val stringPrintable: Printable[String] =
         new Printable[String] {
-          def format(value: String): String =
-            "\"" + value + "\""
+          def format(value: String): String = "\"" + value + "\""
         }
 
       implicit val booleanPrintable: Printable[Boolean] =
         new Printable[Boolean] {
-          def format(value: Boolean): String =
-            if (value) "yes" else "no"
+          def format(value: Boolean): String = if (value) "yes" else "no"
         }
 
       implicit val intPrintable: Printable[Int] =
@@ -108,7 +103,7 @@ class FunctorSpec extends AnyWordSpec {
       //        override def format(value: Box[A]): String = pa.format(value.value)
       //      }
 
-      implicit def boxPrintable[A](implicit pa: Printable[A]) =
+      implicit def boxPrintable[A](implicit pa: Printable[A]): Printable[Box[A]] =
         pa.contramap[Box[A]](_.value)
 
       format(Box(1))
@@ -118,19 +113,17 @@ class FunctorSpec extends AnyWordSpec {
 
     "imap" in {
 
-      def encode[A](value: A)(implicit c: Codec[A]): String =
-        c.encode(value)
-      def decode[A](value: String)(implicit c: Codec[A]): A =
-        c.decode(value)
+      def encode[A](value: A)(implicit c: Codec[A]): String = c.encode(value)
+      def decode[A](value: String)(implicit c: Codec[A]): A = c.decode(value)
 
-      implicit val intCodec = new Codec[Int] {
+      implicit val intCodec: Codec[Int] = new Codec[Int] {
 
         override def encode(value: Int): String = value.toString
 
         override def decode(value: String): Int = value.toInt
       }
 
-      implicit val doubleCodec = new Codec[Double] {
+      implicit val doubleCodec: Codec[Double] = new Codec[Double] {
         override def encode(value: Double): String = value.toString
 
         override def decode(value: String): Double = value.toDouble

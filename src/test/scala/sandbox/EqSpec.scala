@@ -8,14 +8,13 @@ import cats.syntax.eq._
 
 object EqSpec extends App {
 
-  /**
-    * Type safely check equality
+  /** Type safely check equality
     */
   123 === 123
 
   (Some(123): Option[Int]) === (Some(123): Option[Int])
 
-  implicit val eqCat = Eq.instance[Cat] { (a, b) =>
+  implicit val eqCat: Eq[Cat] = Eq.instance[Cat] { (a, b) =>
     a.name === b.name &&
     a.age === b.age &&
     a.color === b.color

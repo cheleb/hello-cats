@@ -14,7 +14,6 @@ object Main extends IOApp {
         _        <- IO(println(s"n is $n"))
         _        <- ref.set(n + 1)
         continue <- IO.pure(n < 10)
-        _        <- Stream
       } yield continue
 
     for {

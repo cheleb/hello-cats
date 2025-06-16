@@ -6,11 +6,12 @@ import cats.Applicative
 
 object tree {
   sealed abstract class Tree[A] extends Product with Serializable {
-    def traverse[F[_]: Applicative, B](f: A => F[B]): F[Tree[B]] = this match {
-      case Tree.Empty() => Applicative[F].pure(Tree.Empty())
-      case Tree.Branch(v, l, r) =>
-        Applicative[F].map3(f(v), l.traverse(f), r.traverse(f))(Tree.Branch(_, _, _))
-    }
+    def traverse[F[_]: Applicative, B](f: A => F[B]): F[Tree[B]] =
+      this match {
+        case Tree.Empty() => Applicative[F].pure(Tree.Empty())
+        case Tree.Branch(v, l, r) =>
+          Applicative[F].map3(f(v), l.traverse(f), r.traverse(f))(Tree.Branch(_, _, _))
+      }
   }
 
   object Tree {
@@ -27,8 +28,7 @@ object tree {
 
 // Example implementation for Tree
   implicit val traverseForTree: Traverse[Tree] = new Traverse[Tree] {
-    def traverse[G[_]: Applicative, A, B](fa: Tree[A])(f: A => G[B]): G[Tree[B]] =
-      fa.traverse(f)
+    def traverse[G[_]: Applicative, A, B](fa: Tree[A])(f: A => G[B]): G[Tree[B]] = fa.traverse(f)
   }
 
 }

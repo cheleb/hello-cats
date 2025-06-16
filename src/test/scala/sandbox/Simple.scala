@@ -12,22 +12,20 @@ object Simple extends IOApp {
   def c(): IO[String] = IO.raiseError(new RuntimeException("c"))
 
   val prg1 = List(a(), b(), c()).parSequence
-    .handleErrorWith {
-      case e =>
-        println("Boooom2")
-        IO.pure(List.empty)
+    .handleErrorWith { case e =>
+      println("Boooom2")
+      IO.pure(List.empty)
     }
     .map { list =>
       println(list)
     }
 
   val prg2 = (a(), b(), c())
-    .parMapN {
-      case (a, b, c) =>
-        println(s"a: $a, b: $b, c: $c")
+    .parMapN { case (a, b, c) =>
+      println(s"a: $a, b: $b, c: $c")
     }
-    .handleErrorWith {
-      case e => IO.pure(println("Boom"))
+    .handleErrorWith { case e =>
+      IO.pure(println("Boom"))
     }
 
   override def run(args: List[String]): IO[ExitCode] =

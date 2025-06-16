@@ -13,7 +13,7 @@ case class Circle(radius: Double) extends Shape {
 case class Person(name: String, size: Int)
 
 object JsonWriterInstances {
-  implicit val stringWriter = new JsonWriter[String] {
+  implicit val stringWriter: JsonWriter[String] = new JsonWriter[String] {
     override def write(value: String): Json = JsString(value)
   }
   implicit val personWriter: JsonWriter[Person] =

@@ -5,11 +5,11 @@ trait Printable[A] {
 }
 
 object PrintableInstances {
-  implicit val stringPrintable = new Printable[String] {
+  implicit val stringPrintable: Printable[String] = new Printable[String] {
     override def format(value: String): String = value
   }
 
-  implicit val intPrintable = new Printable[Int] {
+  implicit val intPrintable: Printable[Int] = new Printable[Int] {
     override def format(value: Int): String = s"$value"
   }
 }
@@ -24,11 +24,9 @@ object Printable {
 object PrintableSyntax {
 
   implicit class PrintableOps[A](value: A) {
-    def format(implicit printable: Printable[A]): String =
-      printable.format(value)
+    def format(implicit printable: Printable[A]): String = printable.format(value)
 
-    def print(implicit printable: Printable[A]): Unit =
-      println(value.format(printable))
+    def print(implicit printable: Printable[A]): Unit = println(value.format(using printable))
   }
 
 }
