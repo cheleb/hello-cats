@@ -3,14 +3,24 @@ package sandbox
 //import cats.instances.string._
 //import cats.syntax.semigroup._
 import cats.effect._
-import cats.effect.unsafe.implicits.global
 
-object Main extends App {
-  //println("Hello " |+| "Cats!")
+object Main extends IOApp {
 
-  val io1 = IO(println("Hello")) *> IO("zozo")
+  override def run(args: List[String]): IO[ExitCode] = {
 
-  val str = io1.unsafeRunSync()
+    def loop(ref: Ref[IO, Int]): IO[Boolean] =
+      for {
+        n        <- ref.get
+        _        <- IO(println(s"n is $n"))
+        _        <- ref.set(n + 1)
+        continue <- IO.pure(n < 10)
+        _        <- Stream
+      } yield continue
 
-  println(str)
+    for {
+      ref <- Ref.of[IO, Int](0)
+      _   <- IO(println("Hello, world!"))
+      _   <- loop(ref).iterateWhile(identity)
+    } yield ExitCode.Success
+  }
 }
