@@ -14,6 +14,8 @@ scalacOptions ++= Seq(
 
 )
 
+run / fork := true
+
 libraryDependencies += "org.typelevel" %% "cats-core" % "2.8.0"
 libraryDependencies += "org.typelevel" %% "cats-effect" % "3.3.14"
 libraryDependencies += "org.typelevel" %% "cats-effect" % "3.3.14"
@@ -42,6 +44,18 @@ libraryDependencies ++= Seq(
   "org.http4s" %% "http4s-ember-server" % http4sVersion,
   "org.http4s" %% "http4s-ember-client" % http4sVersion
 )
+
+libraryDependencies ++= Seq(
+  "io.opentelemetry" % "opentelemetry-exporter-otlp" % "1.49.0" % Runtime, // <1>
+)
+
+libraryDependencies ++= Seq(
+  "org.typelevel" %% "log4cats-slf4j" % "2.7.0", // <1>
+  "org.typelevel" %% "otel4s-oteljava" % "0.12.0", // <1>
+  "org.typelevel" %% "otel4s-oteljava-context-storage" % "0.12.0", // <2>
+  "ch.qos.logback" % "logback-classic" % "1.5.18", // <3>
+)
+javaOptions += "-Dcats.effect.trackFiberContext=true"
 
 libraryDependencies += "org.scalatest" %% "scalatest" % "3.2.14" % Test
 addCompilerPlugin("org.typelevel" % "kind-projector_2.13.6" % "0.13.2")
