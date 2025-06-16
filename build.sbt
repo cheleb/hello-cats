@@ -49,11 +49,16 @@ libraryDependencies ++= Seq(
   "io.opentelemetry" % "opentelemetry-exporter-otlp" % "1.49.0" % Runtime, // <1>
 )
 
+val loggerFVersion = "2.2.0-beta2"
+
 libraryDependencies ++= Seq(
-  "org.typelevel" %% "log4cats-slf4j" % "2.7.0", // <1>
+  "io.kevinlee" %% "logger-f-cats" % loggerFVersion,
+  "io.kevinlee" %% "logger-f-slf4j" % loggerFVersion,
+  "io.kevinlee" %% "logger-f-logback-mdc-cats-effect3" % loggerFVersion,
+//  "org.typelevel" %% "log4cats-slf4j" % "2.7.0", // <1>
   "org.typelevel" %% "otel4s-oteljava" % "0.12.0", // <1>
   "org.typelevel" %% "otel4s-oteljava-context-storage" % "0.12.0", // <2>
-  "ch.qos.logback" % "logback-classic" % "1.5.18", // <3>
+//  "ch.qos.logback" % "logback-classic" % "1.5.18", // <3>
 )
 javaOptions += "-Dcats.effect.trackFiberContext=true"
 

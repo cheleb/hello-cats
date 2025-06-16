@@ -20,8 +20,12 @@ import org.typelevel.otel4s.Attribute
 
 import org.typelevel.log4cats.slf4j.Slf4jLogger
 import org.typelevel.log4cats.Logger
+import loggerf.logger.logback.Ce3MdcAdapter
+import org.slf4j.MDC
 
 object TapirHttp4sExample extends IOApp {
+
+  Ce3MdcAdapter.initialize()
 
   given Logger[IO] = Slf4jLogger.getLogger[IO]
 
@@ -45,7 +49,8 @@ object TapirHttp4sExample extends IOApp {
         helloEndpoint.serverLogicSuccess: req =>
           tracer.span("hello-endpoint", Attribute("zozo", "bo")).use { implicit span =>
             // This is where you can add tracing logic
-            logger.info(s"Received request: $req") >>
+            MDC.put("traceId", span.context.traceIdHex)
+            logger.info(s"Received request: $req") *>
             helloLogic(())
           }
       )
