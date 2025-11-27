@@ -1,7 +1,7 @@
 name := "hello-cats"
 version := "0.0.1-SNAPSHOT"
 
-scalaVersion := "3.7.1"
+scalaVersion := "3.7.4"
 
 scalacOptions ++= Seq(
   "-encoding", "UTF-8",   // source files are in UTF-8
@@ -14,7 +14,7 @@ scalacOptions ++= Seq(
 
 )
 
-run / fork := true
+Compile / run / fork := true
 
 libraryDependencies += "org.typelevel" %% "cats-core" % "2.8.0"
 libraryDependencies += "org.typelevel" %% "cats-effect" % "3.3.14"
